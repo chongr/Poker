@@ -30,15 +30,21 @@ describe Hand do
 
   end
 
-  # describe "Hand#replenish" do
-  #
-  #   it "replenished your hand till its full (5)" do
-  #     hand.discard(card1, card2)
-  #
-  # 
-  #     expect().to eq()
-  #   end
-  # end
+  aceofhearts = Card.new(:heart,:ace)
+  aceofspades = Card.new(:spade, :ace)
+  aceofdiamonds = Card.new(:diamond, :ace)
+  tenofdiamonds = Card.new(:diamond, :ten)
+
+  describe "Hand#three_kind" do
+    let(:deck1) {double("deck", :draw => [aceofhearts, tenofdiamonds, aceofspades])}
+    let(:hand1) {Hand.new(deck1)}
+    it "returns true" do
+      expect(hand1.three_kind?).to eq(false)
+    end
+
+  end
+
+
 
 
 end

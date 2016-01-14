@@ -52,8 +52,14 @@ class Hand
   end
 
   def four_kind?
-    unique = @cards_in_hand.uniq {|card| card.card_value}
-    return true if unique.length == 2
+    @cards_in_hand.each do |card1|
+      cardcount = 0
+      @cards_in_hand.each do |card2|
+        cardcount += 1 if card1.card_value == card2.card_value
+      end
+      return true if cardcount == 4
+    end
+
     false
   end
 
@@ -76,6 +82,36 @@ class Hand
   end
 
   def full_house?
+    cards_hash = Hash.new(0)
+    @cards_in_hand.each do |card|
+      cards_hash[card_value] += 1
+    end
 
+    three_of_a_kind = false
+    pair = false
+    cards_hash.each do |key, value|
+      pair = true if value == 2
+      three_of_a_kind = true if value == 3
+      return true if pair && three_of_a_kind
+    end
+
+    false
+  end
+
+  def two_pair?
+    cards_hash = Hash.new(0)
+    @cards_in_hand.each do |card|
+      cards_hash[card_value] += 1
+    end
+
+    pair1 = false
+    pair2 = false
+    cards_hash.each do |key, value|
+      pair1 = true if value == 2
+      pair2 = true if value == 2 && pair1 == true
+      return true if pair1 && pair2
+    end
+
+    false
   end
 end
